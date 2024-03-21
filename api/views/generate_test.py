@@ -107,9 +107,9 @@ class GenerateTest(GenericAPIView):
                         full_answers.append(f_a)
                     answers_str = f"A) {shuffled_answers[0]}\n\nB) {shuffled_answers[1]}\n\nC) {shuffled_answers[2]}\n\nD) {shuffled_answers[3]}\n\n"
 
-                    elements.append(Paragraph(answers_str, custom_style))  # Add shuffled answer choices
+                    elements.append(Paragraph(answers_str, custom_style))
                     # elements.append(Spacer(1, 5))
-                elements.append(Spacer(1, 20))  # Add space between questions
+                elements.append(Spacer(1, 20))
 
             pdf.build(elements)
 
@@ -133,8 +133,8 @@ class GenerateTest(GenericAPIView):
 
             # Fayllarni birlashtirish va yangi faylni saqlash
             merge_pdfs([muqova, test], f'camtest-{subject_name1}-{subject_name2}{num+1}.pdf')
-            # os.remove(file_path)
-            # os.remove(f'camtest-{subject_name1}-{subject_name2}{num+1}.pdf')
+            os.remove(file_path)
+
             book_code = data_muqova[1]
             answer = AnswerTest(book_code=book_code, answers=full_answers[start_index:end_index])
             answer.save()
