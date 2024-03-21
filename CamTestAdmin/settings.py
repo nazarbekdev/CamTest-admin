@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,6 +15,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django_extensions',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -62,8 +64,17 @@ DATABASES = {
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
-        # 'OPTIONS': {'sslmode': 'require'}
+        'PORT': os.getenv('DB_PORT')
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6380/1',  # Adjust accordingly
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
     }
 }
 
@@ -91,20 +102,11 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+MEDIA_ROOT = 'tests/'
+DOCUMENT_ROOT = os.path.join(BASE_DIR, 'document/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# DEFAULT_FILE_STORAGE = 'Microservice1.azure_storage.AzureMediaStorage'
-# STATICFILES_STORAGE = 'Microservice1.azure_storage.AzureStaticStorage'
-#
-# AZURE_ACCOUNT_NAME = os.getenv('AZURE_ACCOUNT_NAME')
-# AZURE_ACCOUNT_KEY = os.getenv('AZURE_ACCOUNT_KEY')
-# AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
-#
-# # Static files (CSS, JavaScript, Images)
-# # https://docs.djangoproject.com/en/5.0/howto/static-files/
-# STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/static/'
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
-#
-# MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/media/'
-# MEDIA_ROOT = BASE_DIR / 'mediafiles'
+LOGOUT_REDIRECT_URL = '/'
+
+LOGIN_URL = '/'
