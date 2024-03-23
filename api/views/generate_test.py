@@ -79,7 +79,7 @@ class GenerateTest(GenericAPIView):
                         elements.append(Paragraph(test_text, custom_style))
                         if test.image:
                             print('test image path:   ', test.image)
-                            test_image = Image(f'/home/nazarbek/CamTest-admin/{test.image}', width=110, height=70)
+                            test_image = Image(f'/home/ubuntu/CamTest-admin/{test.image}', width=110, height=70)
                             elements.append(test_image)
                             elements.append(Spacer(1, 20))
 
@@ -149,11 +149,12 @@ class GenerateTest(GenericAPIView):
 
             # barcha generatsiya bo'lgan test fayllarini birlashtirish
             test_book_name = generate_random_name()
-            merge_pdf(all_tests, f'/home/nazarbek/CamTest-admin/tests/{test_book_name}.pdf')
+            merge_pdf(all_tests, f'/home/ubuntu/CamTest-admin/tests/{test_book_name}.pdf')
             data = UserFile(user_id=user_name, file=f'{test_book_name}.pdf')
             data.save()
 
             revome_file(all_tests)
+            os.remove('qr_code.png')
             return Response({'success': True})
         else:
             return Response({'success': False, 'message': 'Sizda yetarlicha limit mavjud emas!'})

@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'api',
 
     'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,19 @@ DATABASES = {
     }
 }
 
+
+# SWAGGER
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+        }
+    }
+}
+
+# Redis
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
@@ -103,7 +117,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 MEDIA_ROOT = 'tests/'
-DOCUMENT_ROOT = os.path.join(BASE_DIR, 'document/')
+DOCUMENT_ROOT = os.path.join(BASE_DIR, 'document')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

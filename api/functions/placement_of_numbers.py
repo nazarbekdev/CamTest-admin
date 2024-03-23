@@ -9,8 +9,8 @@ from api.functions.qr_code import qr_code_img
 
 
 def placement_of_numbers():
-    pdf_path = '/home/nazarbek/CamTest-admin/media/files/MUQOVA.pdf'
-    image_path = '/home/nazarbek/CamTest-admin/media/files/qora_nuqta.jpg'
+    pdf_path = '/home/ubuntu/CamTest-admin/media/files/MUQOVA.pdf'
+    image_path = '/home/ubuntu/CamTest-admin/media/files/qora_nuqta.jpg'
     pdf_page = fitz.open(pdf_path)
     page = pdf_page[0]
     book_number = str(random.randint(1000000, 3000000))
@@ -141,9 +141,9 @@ def placement_of_numbers():
     rect = fitz.Rect(x1 - 70, y1 + 50, x1 + 40, y1 + 150)
     page.insert_image(rect, filename=qr_code_image)
 
-    pdf_page.save('/home/nazarbek/CamTest-admin/media/files/muqova.pdf')
+    pdf_page.save('/home/ubuntu/CamTest-admin/media/files/muqova.pdf')
     pdf_page.close()
 
-    result = ['/home/nazarbek/CamTest-admin/media/files/muqova.pdf', book_number]
+    result = ['/home/ubuntu/CamTest-admin/media/files/muqova.pdf', book_number]
 
     return result
