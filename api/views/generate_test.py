@@ -3,6 +3,7 @@ import random
 from PyPDF2 import PdfReader, PdfWriter
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -74,47 +75,62 @@ class GenerateTest(GenericAPIView):
                     self.add_subject_heading(elements, subject_name)
 
                     for i, test in enumerate(tests):
-                        test_text = f"{numbering_range[i]}. {test.question.replace('@', '')}\n\n" if '@' in test.question else f"{numbering_range[i]}. {test.question}\n\n"
-                        elements.append(Spacer(1, 5))
-                        elements.append(Paragraph(test_text, custom_style))
-                        if test.image:
-                            print('test image path:   ', test.image)
-                            test_image = Image(f'/home/ubuntu/CamTest-admin/{test.image}', width=110, height=70)
+                        if test.answers != '?':
+                            test_text = f"{numbering_range[i]}. {test.question.replace('@', '')}\n\n" if '@' in test.question else f"{numbering_range[i]}. {test.question}\n\n"
+                            elements.append(Spacer(1, 5))
+                            elements.append(Paragraph(test_text, custom_style))
+                            if test.image:
+                                print('test image path:   ', test.image)
+                                test_image = Image(f'/home/ubuntu/CamTest-admin/{test.image}', width=110, height=70)
+                                elements.append(test_image)
+                                elements.append(Spacer(1, 20))
+
+                            len_ = len(test.answers) - 1
+                            tests_ = test.answers[:len_]
+                            shuffled_answers = random.sample(tests_.split('#'), len(tests_.split('#')))
+                            if shuffled_answers[0] == test.answer:
+                                f_a = {
+                                    numbering_range[i]: 'A'
+                                }
+                                full_answers.append(f_a)
+                            elif shuffled_answers[1] == test.answer:
+                                f_a = {
+                                    numbering_range[i]: 'B'
+                                }
+                                full_answers.append(f_a)
+                            elif shuffled_answers[2] == test.answer:
+                                f_a = {
+                                    numbering_range[i]: 'C'
+                                }
+                                full_answers.append(f_a)
+                            elif shuffled_answers[3] == test.answer:
+                                f_a = {
+                                    numbering_range[i]: 'D'
+                                }
+                                full_answers.append(f_a)
+                            else:
+                                f_a = {
+                                    numbering_range[i]: 'Null'
+                                }
+                                full_answers.append(f_a)
+                            answers_str = f"A) {shuffled_answers[0]}\n\nB) {shuffled_answers[1]}\n\nC) {shuffled_answers[2]}\n\nD) {shuffled_answers[3]}\n\n"
+
+                            elements.append(Paragraph(answers_str, custom_style))
+                            # elements.append(Spacer(1, 5))
+                        else:
+                            test_text = f"{numbering_range[i]}."
+                            elements.append(Spacer(1, 5))
+                            elements.append(Paragraph(test_text, custom_style))
+
+                            test_image = Image(f'/home/ubuntu/CamTest-admin/{test.image}', width=200, height=60)
                             elements.append(test_image)
                             elements.append(Spacer(1, 20))
 
-                        len_ = len(test.answers) - 1
-                        tests_ = test.answers[:len_]
-                        shuffled_answers = random.sample(tests_.split('#'), len(tests_.split('#')))
-                        if shuffled_answers[0] == test.answer:
                             f_a = {
-                                numbering_range[i]: 'A'
+                                numbering_range[i]: test.answer
                             }
                             full_answers.append(f_a)
-                        elif shuffled_answers[1] == test.answer:
-                            f_a = {
-                                numbering_range[i]: 'B'
-                            }
-                            full_answers.append(f_a)
-                        elif shuffled_answers[2] == test.answer:
-                            f_a = {
-                                numbering_range[i]: 'C'
-                            }
-                            full_answers.append(f_a)
-                        elif shuffled_answers[3] == test.answer:
-                            f_a = {
-                                numbering_range[i]: 'D'
-                            }
-                            full_answers.append(f_a)
-                        else:
-                            f_a = {
-                                numbering_range[i]: 'Null'
-                            }
-                            full_answers.append(f_a)
-                        answers_str = f"A) {shuffled_answers[0]}\n\nB) {shuffled_answers[1]}\n\nC) {shuffled_answers[2]}\n\nD) {shuffled_answers[3]}\n\n"
 
-                        elements.append(Paragraph(answers_str, custom_style))
-                        # elements.append(Spacer(1, 5))
                     elements.append(Spacer(1, 20))
 
                 pdf.build(elements)
@@ -150,7 +166,7 @@ class GenerateTest(GenericAPIView):
             # barcha generatsiya bo'lgan test fayllarini birlashtirish
             test_book_name = generate_random_name()
             merge_pdf(all_tests, f'/home/ubuntu/CamTest-admin/tests/{test_book_name}.pdf')
-            data = UserFile(user_id=user_name, file=f'{test_book_name}.pdf')
+            data = UserFile(user_id=user_name, file=f'tests/{test_book_name}.pdf')
             data.save()
 
             revome_file(all_tests)
