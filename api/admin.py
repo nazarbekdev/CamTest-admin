@@ -1,5 +1,5 @@
 from django.contrib import admin
-from api.models import Document, SubjectTest, Subject, Language, GenerateTest, CTUser, AnswerTest, UserFile
+from api.models import Document, SubjectTest, Subject, Language, GenerateTest, CTUser, AnswerTest, UserFile, CallNumber
 
 
 class AnswerTestAdmin(admin.ModelAdmin):
@@ -27,7 +27,7 @@ class SubjectAdmin(admin.ModelAdmin):
     search_fields = ('question',)
 
 
-admin.site.register((Subject, Language, GenerateTest))
+admin.site.register((Subject, Language, GenerateTest, CallNumber))
 admin.site.register(Document, DocumentAdmin)
 admin.site.register(SubjectTest, SubjectAdmin)
 admin.site.register(CTUser, CTUserAdmin)
