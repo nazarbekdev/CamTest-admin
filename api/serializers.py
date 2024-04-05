@@ -1,11 +1,17 @@
 from rest_framework import serializers
-from api.models import Document, Subject, GenerateTest, Language, CTUser
+from api.models import Document, Subject, GenerateTest, Language, CTUser, CallNumber
 from api.models import UserFile
 
 
 class CamTestUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CTUser
+        fields = ('id', 'name', 'limit')
+
+
+class CallNumberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CallNumber
         fields = '__all__'
 
 

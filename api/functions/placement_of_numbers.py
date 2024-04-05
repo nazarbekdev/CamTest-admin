@@ -9,8 +9,8 @@ from api.functions.qr_code import qr_code_img
 
 
 def placement_of_numbers():
-    pdf_path = '/home/ubuntu/CamTest-admin/media/files/MUQOVA.pdf'
-    image_path = '/home/ubuntu/CamTest-admin/media/files/qora_nuqta.jpg'
+    pdf_path = '/home/nazarbek/CamTest-admin/media/files/MUQOVA.pdf'
+    image_path = '/home/nazarbek/CamTest-admin/media/files/qora_nuqta.jpg'
     pdf_page = fitz.open(pdf_path)
     page = pdf_page[0]
     book_number = str(random.randint(1000000, 3000000))
@@ -129,21 +129,21 @@ def placement_of_numbers():
             print('Xatolik bor!!!')
 
     x = 115
-    y = 155
+    y = 157
 
     x1 = 140
     y1 = -20
 
     rect = fitz.Rect(x, y, x + 200, y + 50)
-    page.insert_textbox(rect, book_number, fontsize=20, fill=(0, 0, 0))
+    page.insert_textbox(rect, book_number, fontsize=18, fill=(0, 0, 0))
 
     qr_code_image = qr_code_img(book_number)
     rect = fitz.Rect(x1 - 70, y1 + 50, x1 + 40, y1 + 150)
     page.insert_image(rect, filename=qr_code_image)
 
-    pdf_page.save('/home/ubuntu/CamTest-admin/media/files/muqova.pdf')
+    pdf_page.save('/home/nazarbek/CamTest-admin/media/files/muqova.pdf')
     pdf_page.close()
 
-    result = ['/home/ubuntu/CamTest-admin/media/files/muqova.pdf', book_number]
+    result = ['/home/nazarbek/CamTest-admin/media/files/muqova.pdf', book_number]
 
     return result

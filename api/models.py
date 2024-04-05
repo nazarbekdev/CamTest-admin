@@ -10,6 +10,13 @@ class CTUser(models.Model):
         return self.name
 
 
+class CallNumber(models.Model):
+    number = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.number
+
+
 class Language(models.Model):
     name = models.CharField(max_length=50)
 
