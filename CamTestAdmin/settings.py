@@ -1,4 +1,6 @@
 import os
+from CamTestAdmin.jazzmin import JAZZMIN_SETTINGS
+
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -13,6 +15,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django_extensions',
@@ -32,6 +35,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -68,7 +72,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT')
     }
 }
-
 
 # SWAGGER
 SWAGGER_SETTINGS = {
@@ -122,5 +125,6 @@ DOCUMENT_ROOT = os.path.join(BASE_DIR, 'document')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGOUT_REDIRECT_URL = '/'
-
 LOGIN_URL = '/'
+
+JAZZMIN_SETTINGS = JAZZMIN_SETTINGS

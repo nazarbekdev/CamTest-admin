@@ -13,7 +13,7 @@ from api.functions.merge_pdf import merge_pdf
 from api.functions.placement_of_numbers import placement_of_numbers
 from api.functions.random_name import generate_random_name
 from api.functions.revome_file import revome_file
-from api.models import SubjectTest, Subject, AnswerTest, UserFile, CTUser
+from api.models import SubjectTest, Subject, AnswerTest, UserFile, CTUser, GenerateTest
 from api.serializers import TestGeneratePDFSerializer
 
 
@@ -26,7 +26,7 @@ custom_style = ParagraphStyle(name='CustomStyle', parent=styles['Normal'], fontN
 custom_style.spaceAfter = 1
 
 
-class GenerateTest(GenericAPIView):
+class GenerateTestView(GenericAPIView):
     serializer_class = TestGeneratePDFSerializer
 
     def add_subject_heading(self, elements, subject_name):
@@ -194,6 +194,9 @@ class GenerateTest(GenericAPIView):
             data = UserFile(user_id=user_name, file=f'tests/{test_book_name}.pdf')
             data.save()
 
+            # generate_test = GenerateTest(subject1=serializer.data['subject1'], subject2=serializer.data[
+            # 'subject2'], language=serializer.data['language'], number_books=number_books, user_id=user_name)
+            # generate_test.save()
             revome_file(all_tests)
             os.remove('qr_code.png')
             return Response({'success': True})

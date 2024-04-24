@@ -39,6 +39,3 @@ def draw_horizontal_line(pdf_path, output_path):
 
     # PDF faylni yopish
     pdf_doc.close()
-
-
-draw_horizontal_line('/home/nazarbek/CamTest-admin/tests_fzthobny.pdf', 'result.pdf')

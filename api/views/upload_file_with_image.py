@@ -38,7 +38,7 @@ class UploadFileWithImageView(GenericAPIView):
                         answers='?'
                     )
 
-                os.remove(document_loc)
+                # os.remove(document_loc)
             except Exception as e:
                 return Response({'success': False, 'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
