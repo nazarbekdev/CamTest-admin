@@ -81,3 +81,17 @@ class UserFile(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+class CheckSheet(models.Model):
+    user = models.ForeignKey(CTUser, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='tests/inputfile')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.user)
+
+
+class CheckSheetResult(models.Model):
+    user = models.ForeignKey(CTUser, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='tests/outputfile')
