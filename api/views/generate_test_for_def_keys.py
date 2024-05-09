@@ -58,9 +58,9 @@ class GenerateTestDefaultKey(GenericAPIView):
         pdf = SimpleDocTemplate(file_path, pagesize=letter, leftMargin=20, bottomMargin=20, rightMargin=10, topMargin=25)
         elements = []
 
-        # Sahifa shabloni
+        # # Sahifa shabloni
         # frame1 = Frame(pdf.leftMargin-40, pdf.bottomMargin-80, pdf.width / 2 - 80, pdf.height+140, id='col1')
-        # # frame2 = Frame(pdf.width / 2 + 80, pdf.bottomMargin-40, pdf.width / 2 - 80, pdf.height+20, id='col2')
+        # frame2 = Frame(pdf.width / 2 + 80, pdf.bottomMargin-40, pdf.width / 2 - 80, pdf.height+20, id='col2')
         #
         # # Sahifa shablonini yaratish
         # template = PageTemplate(id='twoColumn', frames=[frame1])
@@ -81,6 +81,7 @@ class GenerateTestDefaultKey(GenericAPIView):
         # user   limitini olish
         user_limit = CTUser.objects.get(id=user_name)
 
+        # default key lar
         keys = {1: 'C', 2: 'C', 3: 'A', 4: 'C', 5: 'A', 6: 'B', 7: 'D', 8: 'B', 9: 'B', 10: 'D', 11: 'D', 12: 'B',
                 13: 'D', 14: 'B', 15: 'A', 16: 'A', 17: 'B', 18: 'B', 19: 'D', 20: 'B', 21: 'C', 22: 'A', 23: 'B',
                 24: 'A', 25: 'C', 26: 'B', 27: 'A', 28: 'C', 29: 'B', 30: 'B', 31: 'D', 32: 'A', 33: 'B', 34: 'B',
@@ -91,9 +92,12 @@ class GenerateTestDefaultKey(GenericAPIView):
                 79: 'D', 80: 'A', 81: 'A', 82: 'C', 83: 'C', 84: 'C', 85: 'A', 86: 'B', 87: 'A', 88: 'D', 89: 'A',
                 90: 'B'}
 
+        # User limitini tekshirish
         if user_limit.limit >= number_books:
             user_limit.limit -= number_books
             user_limit.save()
+
+            # Kitoblar soni bo'yicha generatsiya qilish
             for num in range(number_books):
                 elements.append(Paragraph('Majburiy Fanlar', centered_style))
                 for subject_name, tests, numbering_range in zip(subject_list, subjects, numbering_ranges):
@@ -208,7 +212,7 @@ class GenerateTestDefaultKey(GenericAPIView):
                 answer_db = AnswerTest(book_code=book_code, answers=keys)
                 answer_db.save()
 
-            # barcha generatsiya bo'lgan test fayllarini birlashtirish
+            # Barcha generatsiya bo'lgan test fayllarini birlashtirish
             test_book_name = generate_random_name()
             merge_pdf(all_tests, f'/home/nazarbek/CamTest-admin/tests/{test_book_name}.pdf')
             data = UserFile(user_id=user_name, file=f'tests/{test_book_name}.pdf')
