@@ -13,7 +13,7 @@ def placement_of_numbers():
     image_path = '/home/nazarbek/CamTest-admin/media/files/qora_nuqta.jpg'
     pdf_page = fitz.open(pdf_path)
     page = pdf_page[0]
-    book_number = str(random.randint(1000000, 3000000))
+    book_number = str(random.randint(1000000, 5000000))
 
     first_column = {1: '61.5/358.8', 2: '61.5/372.5', 3: '61.5/386.3', 4: '61.5/400', 5: '61.5/413.3', 6: '61.5/426.5',
                     7: '61.5/440.5', 8: '61.5/454', 9: '61.5/467.5', 0: '61.5/481.5', 'b_n': '55/382'}
