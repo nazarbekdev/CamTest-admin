@@ -1,1 +1,33 @@
+[Unit]
+Description=CamTest platform
+After=network.target
 
+[Service]
+WorkingDirectory=/var/www/CamTest-admin
+ExecStart=/var/www/CamTest-admin/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 1 \
+          --bind unix:/var/www/CamTest-admin/camtest.sock \
+          CamTestAdmin.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+server {
+    listen 80;
+    server_name 172.233.221.4;
+
+    location /static/ {
+        root /var/www/CamTest-admin;
+    }
+    location /media/ {
+        root /var/www/CamTest-admin;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/var/www/CamTest-admin/camtest.sock;
+    }
+}
