@@ -37,6 +37,7 @@ pycparser==2.21
 pygame==2.5.2
 PyJWT==2.8.0
 PyMuPDF==1.23.26
+# PyMuPDF==1.23.26
 PyMuPDFb==1.23.22
 pypdf==4.0.2
 PyPDF2==3.0.1

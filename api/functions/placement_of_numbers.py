@@ -9,7 +9,7 @@ from api.functions.qr_code import qr_code_img
 
 
 def placement_of_numbers():
-    pdf_path = '/Users/uzmacbook/Portfolio/CamTest-admin/media/files/kitob muqova.pdf'
+    pdf_path = '/Users/uzmacbook/Portfolio/CamTest-admin/media/files/kitob muqova_full.pdf'
     image_path = '/Users/uzmacbook/Portfolio/CamTest-admin/media/files/2024-06-29 08.38.38.jpg'
 
     pdf_page = fitz.open(pdf_path)
@@ -146,16 +146,33 @@ def placement_of_numbers():
     x1 = 140
     y1 = -20
 
+    x2 = 390
+    y2 = 377.5
+    y3 = 397.5
+    y4 = 416.5
+
     rect = fitz.Rect(x, y, x + 200, y + 50)
     page.insert_textbox(rect, book_number, fontsize=16, fill=(0, 0, 0))
 
     qr_code_image = qr_code_img(book_number)
     rect = fitz.Rect(x1 - 70, y1 + 50, x1 + 40, y1 + 150)
 
+    rect1 = fitz.Rect(x2, y2, x2 + 200, y2 + 50)
+    page.insert_textbox(rect1, 'Majburiy fanlar', fontsize=14, fill=(0, 0, 0), fontname="helv")
+
+    rect1 = fitz.Rect(x2, y3, x2 + 200, y2 + 50)
+    page.insert_textbox(rect1, 'Tarix', fontsize=14, fill=(0, 0, 0), fontname="helv")
+
+    rect2 = fitz.Rect(x2, y4, x2 + 200, y3 + 50)
+    page.insert_textbox(rect2, 'Geografiya', fontsize=14, fill=(0, 0, 0), fontname="helv")
+
     page.insert_image(rect, filename=qr_code_image)
     pdf_page.save('/Users/uzmacbook/Portfolio/CamTest-admin/media/files/muqova.pdf')
     pdf_page.close()
 
-    result = ['/Users/uzmacbook/Portfolio/CamTest-admin/media/files/muqova.pdf', book_number]
+    # result = ['/Users/uzmacbook/Portfolio/CamTest-admin/media/files/muqova.pdf', book_number]
+    #
+    # return result
 
-    return result
+
+placement_of_numbers()
