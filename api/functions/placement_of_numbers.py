@@ -151,11 +151,11 @@ def placement_of_numbers():
 
     qr_code_image = qr_code_img(book_number)
     rect = fitz.Rect(x1 - 70, y1 + 50, x1 + 40, y1 + 150)
-    page.insert_image(rect, filename=qr_code_image)
 
+    page.insert_image(rect, filename=qr_code_image)
+    pdf_page.save('/Users/uzmacbook/Portfolio/CamTest-admin/media/files/muqova.pdf')
     pdf_page.close()
 
-    result = ['/home/nazarbek/CamTest-admin/media/files/muqova.pdf', book_number]
+    result = ['/Users/uzmacbook/Portfolio/CamTest-admin/media/files/muqova.pdf', book_number]
 
     return result
-
