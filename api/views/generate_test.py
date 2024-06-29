@@ -38,10 +38,6 @@ class GenerateTestView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         # Majburiy fanlar
-        maj_ona_tili = SubjectTest.objects.filter(language_id=serializer.data['language'], subject_id=1).order_by('?')[
-                       :10]
-        maj_matem = SubjectTest.objects.filter(language_id=serializer.data['language'], subject_id=2).order_by('?')[:10]
-        maj_tarix = SubjectTest.objects.filter(language_id=serializer.data['language'], subject_id=3).order_by('?')[:10]
 
         # Boshqa tanlangan fanlar
         sub_1 = SubjectTest.objects.filter(language_id=serializer.data['language'],
@@ -54,8 +50,6 @@ class GenerateTestView(GenericAPIView):
 
         # Barcha generatsiya testlarni yozish uchun pdf file ochish
         file_path = 'subject_test.pdf'
-        pdf = SimpleDocTemplate(file_path, pagesize=letter, leftMargin=20, bottomMargin=20, rightMargin=10,
-                                topMargin=25)
         elements = []
 
         # # Sahifa shabloni
@@ -134,15 +128,8 @@ class GenerateTestView(GenericAPIView):
                                 full_answers.append(f_a)
                             if len(test.answer) <= 30:
                                 elements.append(Spacer(1, 2))
-                                elements.append(Paragraph(
-                                    f"A) {shuffled_answers[0]}  B) {shuffled_answers[1]}  C) {shuffled_answers[2]}  D) {shuffled_answers[3]}",
-                                    custom_style))
                             elif len(test.answer) > 30:
                                 elements.append(Spacer(1, 2))
-                                elements.append(
-                                    Paragraph(f"A) {shuffled_answers[0]}  C) {shuffled_answers[2]}", custom_style))
-                                elements.append(
-                                    Paragraph(f"B) {shuffled_answers[1]}  D) {shuffled_answers[3]}", custom_style))
 
                         else:
                             test_text = f"{numbering_range[i]}."
