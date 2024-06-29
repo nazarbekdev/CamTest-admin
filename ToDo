@@ -1,0 +1,68 @@
+[Unit]
+Description=CamTest platform
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/CamTest-admin
+ExecStart=/var/www/CamTest-admin/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 1 \
+          --bind unix:/var/www/CamTest-admin/camtest.sock \
+          CamTestAdmin.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+server {
+    listen 80;
+    server_name 172.233.221.4;
+
+    location /static/ {
+        root /var/www/CamTest-admin;
+    }
+    location /media/ {
+        root /var/www/CamTest-admin;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/var/www/CamTest-admin/camtest.sock;
+    }
+}
+
+
+
+#############################################################################################
+
+                                    #  Fast Api  #
+
+ from multiprocessing import cpu_count
+
+ # Socket Path
+ bind = 'unix:/var/www/omr_detaction_api/app/gunicorn.sock'
+
+ # Worker Options
+ workers = cpu_count() + 1
+ worker_class = 'uvicorn.workers.UvicornWorker'
+
+ # Logging Options
+ loglevel = 'debug'
+ accesslog = '/var/www/omr_detaction_api/app/access_log'
+ errorlog =  '/var/www/omr_detaction_api/app/error_log'
+
+
+
+  [Unit]
+ Description=Gunicorn Daemon for FastAPI Demo Application
+ After=network.target
+
+ [Service]
+ User=demo
+ Group=www-data
+ WorkingDirectory=/var/www/omr_detaction_api/app
+ ExecStart=/var/www/omr_detaction_api/venv/bin/gunicorn -c gunicorn_conf.py main:app
+
+ [Install]
+ WantedBy=multi-user.target
