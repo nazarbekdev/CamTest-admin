@@ -129,13 +129,13 @@ def placement_of_numbers():
             print('Xatolik bor!!!')
 
     x = 115
-    y = 157
+    y = 159
 
     x1 = 140
     y1 = -20
 
     rect = fitz.Rect(x, y, x + 200, y + 50)
-    page.insert_textbox(rect, book_number, fontsize=18, fill=(0, 0, 0))
+    page.insert_textbox(rect, book_number, fontsize=16, fill=(0, 0, 0))
 
     qr_code_image = qr_code_img(book_number)
     rect = fitz.Rect(x1 - 70, y1 + 50, x1 + 40, y1 + 150)

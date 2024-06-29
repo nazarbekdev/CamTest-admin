@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Document, Subject, GenerateTest, Language, CTUser, CallNumber
+from api.models import Document, Subject, GenerateTest, Language, CTUser, CallNumber, CheckSheet, GenerateTestData
 from api.models import UserFile
 
 
@@ -33,6 +33,12 @@ class GenerateTestSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class GenerateTestDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GenerateTestData
+        fields = '__all__'
+
+
 class TestGeneratePDFSerializer(serializers.ModelSerializer):
     class Meta:
         model = GenerateTest
@@ -49,3 +55,10 @@ class UserFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserFile
         fields = ['user', 'file']
+
+
+class CheckSheetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CheckSheet
+        fields = ['user', 'file', 'book_id']
+        # read_only_fields = ['book_id']
