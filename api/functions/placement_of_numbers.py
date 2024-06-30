@@ -170,9 +170,8 @@ def placement_of_numbers():
     pdf_page.save('/Users/uzmacbook/Portfolio/CamTest-admin/media/files/muqova.pdf')
     pdf_page.close()
 
-    # result = ['/Users/uzmacbook/Portfolio/CamTest-admin/media/files/muqova.pdf', book_number]
-    #
-    # return result
+    result = ['/Users/uzmacbook/Portfolio/CamTest-admin/media/files/muqova.pdf', book_number]
+
+    return result
 
 
-placement_of_numbers()
