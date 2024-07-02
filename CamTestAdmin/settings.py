@@ -26,6 +26,7 @@ INSTALLED_APPS = [
 
     # app
     'api',
+    'pmapi',
 
     'rest_framework',
     'drf_yasg',
